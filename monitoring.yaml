@@ -1,6 +1,5 @@
 ---
 AWSTemplateFormatVersion: "2010-09-09"
-
 Description: Stack Monitoring DevOps
 
 Parameters:
@@ -10,6 +9,9 @@ Parameters:
   TagsTeam:
     Type: String
     Default: "Adatech"
+  ImageID:
+    Type: String
+    Default: "ami-03c951bbe993ea087"
 
 Resources:
   # Inicio do Recurso SG
@@ -35,16 +37,16 @@ Resources:
           Value: !Ref TagsTeam
 
   # Inicio do Recurso EC2
-  MonitoringEC2:
+  MonitoringInstance:
     Type: AWS::EC2::Instance
     Properties:
-      ImageId: "ami-03c951bbe993ea087"
+      ImageId: !Ref ImageID
       InstanceType: t2.micro
       SecurityGroups:
         - !Ref MonitoringSG
       #IamInstanceProfile:
       UserData:
-        Fn::Base64: | 
+        Fn::Base64: |
           #!/bin/bash
           sudo yum update -y
           sudo yum install -y docker
