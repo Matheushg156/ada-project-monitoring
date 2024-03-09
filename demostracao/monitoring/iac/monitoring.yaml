@@ -1,51 +1,51 @@
 ---
 AWSTemplateFormatVersion: "2010-09-09"
-Description: Stack Monitoring DevOps
+Description: Stack Monitoring DevOps Matheus 
 
-Parameters:
-  TagsProject:
-    Type: String
-    Default: "DevOps"
-  TagsTeam:
-    Type: String
+Parameters: 
+  TagsProject: 
+    Type: String 
+    Default: "Devops"
+  TagsTeam: 
+    Type: String 
     Default: "Adatech"
-  ImageID:
-    Type: String
-    Default: "ami-03c951bbe993ea087"
+  ImageID: 
+    Type: String 
+    Default: "ami-03c951bbe993ea087"  
 
 Resources:
   # Inicio do Recurso SG
   MonitoringSG:
     Type: AWS::EC2::SecurityGroup
-    Properties:
-      GroupDescription: Security group for monitoring
-      SecurityGroupIngress:
-        - IpProtocol: tcp
+    Properties: 
+      GroupDescription: Security group for monitoring Matheus
+      SecurityGroupIngress: 
+        - IpProtocol: tcp 
           FromPort: 22
           ToPort: 22
           CidrIp: 0.0.0.0/0
-        - IpProtocol: tcp
-          FromPort: 443
+        - IpProtocol: tcp 
+          FromPort: 443 
           ToPort: 443
           CidrIp: 0.0.0.0/0
       Tags:
-        - Key: Name
-          Value: sg-monitoring
-        - Key: Project
+        - Key: Name 
+          Value: sg-monitoring 
+        - Key: Project 
           Value: !Ref TagsProject
-        - Key: Team
+        - Key: Team 
           Value: !Ref TagsTeam
 
-  # Inicio do Recurso EC2
-  MonitoringInstance:
+  # Inicio do recurso EC2
+  MonitoringInstance: 
     Type: AWS::EC2::Instance
-    Properties:
+    Properties: 
       ImageId: !Ref ImageID
       InstanceType: t2.micro
-      SecurityGroups:
+      SecurityGroups: 
         - !Ref MonitoringSG
       #IamInstanceProfile:
-      UserData:
+      UserData: 
         Fn::Base64: |
           #!/bin/bash
           sudo yum update -y
@@ -55,9 +55,9 @@ Resources:
           sudo chmod +x /usr/local/bin/docker-compose
           docker-compose --version
       Tags:
-        - Key: Name
-          Value: instance-monitoring
+        - Key: Name 
+          Value: instance-monitoring 
         - Key: Project
           Value: !Ref TagsProject
-        - Key: Team
+        - Key: Team 
           Value: !Ref TagsTeam
