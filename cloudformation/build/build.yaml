@@ -17,7 +17,7 @@ Parameters:
   DockerFilePath:
     Type: String
     Description: Path Dockerfile
-    Default: ""
+    Default: "application/api/Dockerfile"
 
 Resources:
   CodeBuildProject:
