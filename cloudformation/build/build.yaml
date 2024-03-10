@@ -13,7 +13,7 @@ Parameters:
   RepositoryECR:
     Type: String
     Description: Repository image ECR
-    Default: ""
+    Default: "842761359240.dkr.ecr.us-east-1.amazonaws.com/api"
   DockerFilePath:
     Type: String
     Description: Path Dockerfile
