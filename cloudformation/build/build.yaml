@@ -71,8 +71,17 @@ Resources:
         Version: "2012-10-17"
         Statement:
           - Effect: Allow
-            Action: "*"
-            Resource: "*"
+            Principal:
+              Service: codebuild.amazonaws.com
+            Action: sts:AssumeRole
+      Policies:
+        - PolicyName: CodeBuildPolicy
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action: "*"
+                Resource: "*"
 
 Outputs:
   CodeBuildProjectName:
