@@ -28,7 +28,7 @@ Resources:
       ServiceRole: !GetAtt CodeBuildServiceRole.Arn
       Source:
         Type: GITHUB
-        Location: https://github.com/Matheushg156/provisionamento-aws.git
+        Location: https://github.com/Matheushg156/provisionamento-aws
         Auth:
           Type: OAUTH
           Resource: !Ref GitHubToken
@@ -65,23 +65,23 @@ Resources:
             Value: !Ref DockerFilePath
 
   CodeBuildServiceRole:
-      Type: AWS::IAM::Role
-      Properties:
-        AssumeRolePolicyDocument:
-          Version: "2012-10-17"
-          Statement:
-            - Effect: Allow
-              Principal:
-                Service: codebuild.amazonaws.com
-              Action: sts:AssumeRole
-        Policies:
-          - PolicyName: CodeBuildPolicy
-            PolicyDocument:
-              Version: "2012-10-17"
-              Statement:
-                - Effect: Allow
-                  Action: "*"
-                  Resource: "*"
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: codebuild.amazonaws.com
+            Action: sts:AssumeRole
+      Policies:
+        - PolicyName: CodeBuildPolicy
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action: "*"
+                Resource: "*"
 
 Outputs:
   CodeBuildProjectName:
