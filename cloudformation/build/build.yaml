@@ -10,14 +10,14 @@ Parameters:
     Type: String
     Description: Auth GitHub
     Default: ""
-  RepositoryECR:
-    Type: String
-    Description: Repository image ECR
-    Default: "842761359240.dkr.ecr.us-east-1.amazonaws.com/api"
-  DockerFilePath:
-    Type: String
-    Description: Path Dockerfile
-    Default: "application/api/Dockerfile"
+  # RepositoryECR:
+  #   Type: String
+  #   Description: Repository image ECR
+  #   Default: "842761359240.dkr.ecr.us-east-1.amazonaws.com/api"
+  # DockerFilePath:
+  #   Type: String
+  #   Description: Path Dockerfile
+  #   Default: "application/api/Dockerfile"
 
 Resources:
   CodeBuildProject:
@@ -44,10 +44,14 @@ Resources:
             build:
               commands:
                 - echo Build iniciou em `date`...
-                - docker build -t $REPOSITORY_URI_ECR:latest -f $DOCKER_FILE_PATH .
+                - docker build -t 842761359240.dkr.ecr.us-east-1.amazonaws.com/api:latest -f application/api/Dockerfile .
+                - docker build -t 842761359240.dkr.ecr.us-east-1.amazonaws.com/frontend:latest -f application/frontend/Dockerfile .
+                - docker build -t 842761359240.dkr.ecr.us-east-1.amazonaws.com/worker:latest -f application/worker/Dockerfile .
                 - echo Build finalizou em `date`...
                 - echo Enviando imagem para o ECR...
-                - docker push $REPOSITORY_URI_ECR:latest
+                - docker push 842761359240.dkr.ecr.us-east-1.amazonaws.com/api:latest
+                - docker push 842761359240.dkr.ecr.us-east-1.amazonaws.com/frontend:latest
+                - docker push 842761359240.dkr.ecr.us-east-1.amazonaws.com/worker:latest
       Artifacts:
         Type: NO_ARTIFACTS
       Environment:
@@ -57,10 +61,10 @@ Resources:
         EnvironmentVariables:
           - Name: AWS_DEFAULT_REGION
             Value: !Ref AwsRegion
-          - Name: REPOSITORY_URI_ECR
-            Value: !Ref RepositoryECR
-          - Name: DOCKER_FILE_PATH
-            Value: !Ref DockerFilePath
+          # - Name: REPOSITORY_URI_ECR
+          #   Value: 842761359240.dkr.ecr.us-east-1.amazonaws.com/api
+          # - Name: DOCKER_FILE_PATH
+          #   Value: !Ref DockerFilePath
 
   CodeBuildServiceRole:
     Type: AWS::IAM::Role
